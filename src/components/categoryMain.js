@@ -53,10 +53,7 @@ const CategoryMain = ({match}) => {
     const postsRenderEncapsulator = loading ?
         <div className="jumbotron jumbotron-fluid">
             <div className="container text-center">
-                {/*<div className="spinner-border" role="status">
-                    <span className="sr-only">Loading...</span>
-                </div>*/}
-                <img src={LoadingSpinner}/>
+                <img alt="Posts Rendring...." src={LoadingSpinner}/>
             </div>
         </div>
         : postsRender;

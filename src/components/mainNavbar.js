@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
-import Logo from '../img/logo.png';
-import LogoSmall from '../img/logo-small.png';
+import EKinmel from '../img/ekinmel.png';
 import {useDispatch, useSelector} from "react-redux";
 import {logoutUser} from "../actions/userAction";
 import {Link} from "react-router-dom";
@@ -26,8 +25,8 @@ const MainNavbar = () => {
                 <nav className="navbar navbar-expand-lg">
                     <div className="container">
                         <Link to="/" className="navbar-brand home">
-                            <img src={Logo} alt="Obaju logo" className="d-none d-md-inline-block"/><img
-                            src={LogoSmall} alt="Obaju logo" className="d-inline-block d-md-none"/><span
+                            <img src={EKinmel} alt="Obaju logo" className="d-none d-md-inline-block"/><img
+                            src={EKinmel} alt="Obaju logo" className="d-inline-block d-md-none"/><span
                             className="sr-only">Obaju - go to homepage</span></Link>
                         <div className="navbar-buttons">
                             <button type="button" data-toggle="collapse" data-target="#navigation"

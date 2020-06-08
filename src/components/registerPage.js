@@ -5,7 +5,7 @@ const RegisterPage = () => {
         <div className="col-lg-6">
             <div className="box">
                 <h1>New account</h1>
-                <p className="lead">Not our registered customer yet?</p>
+                <p className="lead">Not our registered member yet?</p>
                 <p>With registration with us new world of fashion, fantastic discounts and much more
                     opens to you! The whole process will not take you more than a minute!</p>
                 <p className="text-muted">If you have any questions, please feel free to <a

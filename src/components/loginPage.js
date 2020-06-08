@@ -22,7 +22,7 @@ const LoginPage = () => {
         <div className="col-lg-6">
             <div className="box">
                 <h1>Login</h1>
-                <p className="lead">Already our customer?</p>
+                <p className="lead">Already our member?</p>
                 <p className="text-muted">Welcome to the Kinmel Application. Please provide your login credentials and
                     get started by either buying or selling the goods.</p>
                 <hr/>
