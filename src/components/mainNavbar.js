@@ -3,6 +3,7 @@ import Logo from '../img/logo.png';
 import LogoSmall from '../img/logo-small.png';
 import {useDispatch, useSelector} from "react-redux";
 import {logoutUser} from "../actions/userAction";
+import {Link} from "react-router-dom";
 
 
 const MainNavbar = () => {
@@ -24,10 +25,10 @@ const MainNavbar = () => {
             <header className="header mb-5">
                 <nav className="navbar navbar-expand-lg">
                     <div className="container">
-                        <a href="#" className="navbar-brand home">
+                        <Link to="/" className="navbar-brand home">
                             <img src={Logo} alt="Obaju logo" className="d-none d-md-inline-block"/><img
                             src={LogoSmall} alt="Obaju logo" className="d-inline-block d-md-none"/><span
-                            className="sr-only">Obaju - go to homepage</span></a>
+                            className="sr-only">Obaju - go to homepage</span></Link>
                         <div className="navbar-buttons">
                             <button type="button" data-toggle="collapse" data-target="#navigation"
                                     className="btn btn-outline-secondary navbar-toggler">
@@ -41,7 +42,7 @@ const MainNavbar = () => {
                         </div>
                         <div id="navigation" className="collapse navbar-collapse">
                             <ul className="navbar-nav mr-auto">
-                                <li className="nav-item"><a href="#" className="nav-link active">Home</a></li>
+                                <li className="nav-item"><Link to="/" className="nav-link active">Home</Link></li>
                             </ul>
                             <div className="navbar-buttons d-flex justify-content-end">
                                 <div id="profile" className="navbar-collapse collapse d-none d-lg-block">

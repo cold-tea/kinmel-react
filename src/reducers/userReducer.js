@@ -6,6 +6,8 @@ import {
     FETCH_USERS_SUCCESS,
     LOGOUT_USER
 } from "../actions/userAction";
+import store from "../store";
+import {saveToLocalStorage} from "../store";
 
 const initial = {
     loading: false,

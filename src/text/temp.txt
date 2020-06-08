@@ -1,0 +1,27 @@
+---------- Single card layout
+
+<div className="col-lg-4 col-md-6">
+    <div className="product">
+        <div className="flip-container">
+            <div className="flipper">
+                <div className="front">
+                    <a href="#"><img src={ProductOne} alt="" className="img-fluid" /></a>
+                </div>
+                <div className="back">
+                    <a href="#"><img src={ProductOneTwo} alt="" className="img-fluid" /></a>
+                </div>
+            </div>
+        </div>
+        <a href="#" className="invisible"><img src={ProductOne} alt="" className="img-fluid" /></a>
+        <div className="text">
+            <h3><a href="#">Fur coat with very but very very long name</a></h3>
+            <p className="price">
+                <del />
+                $143.00
+            </p>
+            <p className="buttons"><a href="#" className="btn btn-outline-secondary">View detail</a><a
+                href="#" className="btn btn-primary"><i className="fa fa-shopping-cart" />Add to cart</a>
+            </p>
+        </div>
+    </div>
+</div>

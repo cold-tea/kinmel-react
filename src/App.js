@@ -1,20 +1,32 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 import Login from "./components/login";
 import Home from "./components/home";
 import {useSelector} from "react-redux";
+import MainNavbar from "./components/mainNavbar";
+import Footer from "./components/footer";
+import Copyright from "./components/copyright";
 
 const switchRender = user => {
     return user ? (
-        <Switch>
-            <Route path="/" exact component={Home}/>
-            <Redirect to="/" from="/login"/>
-        </Switch>
+        <React.Fragment>
+            <Router>
+                <MainNavbar/>
+                <Switch>
+                    <Redirect to="/" from="/login"/>
+                    <Route path="/" component={Home}/>
+                </Switch>
+                <Footer/>
+                <Copyright/>
+            </Router>
+        </React.Fragment>
     ) : (
-        <Switch>
-            <Route path="/login" exact component={Login}/>
-            <Redirect to="/login" from="/**"/>
-        </Switch>
+        <Router>
+            <Switch>
+                <Route path="/login" exact component={Login}/>
+                <Redirect to="/login" from="/**"/>
+            </Switch>
+        </Router>
     );
 };
 
@@ -22,9 +34,7 @@ const App = () => {
     const user = useSelector(state => state.user.user);
     return (
         <div className="App">
-            <Router>
-                {switchRender(user)}
-            </Router>
+            {switchRender(user)}
         </div>
     );
 };

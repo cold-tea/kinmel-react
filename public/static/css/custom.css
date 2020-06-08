@@ -1,1 +1,4 @@
 /* your styles go here */
+.category-card-div {
+    max-height: 170px;
+}

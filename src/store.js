@@ -4,7 +4,7 @@ import logger from "redux-logger";
 import thunk from "redux-thunk";
 import {composeWithDevTools} from "redux-devtools-extension";
 
-const saveToLocalStorage = (state) => {
+export const saveToLocalStorage = (state) => {
     try {
         const serializedState = JSON.stringify(state);
         localStorage.setItem("state", serializedState);
