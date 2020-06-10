@@ -4,4 +4,10 @@ $(document).ready(function() {
         $(".nav").find(".active").removeClass("active");
         $(this).addClass("active");
     });
+
+    /*$('#categories-pagination').twbsPagination({
+        totalPages: 20,
+        visiblePages: 7
+    });*/
 });
+

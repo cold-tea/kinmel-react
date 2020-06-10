@@ -11,17 +11,12 @@ import HomeIndex from "./homeIndex";
 
 const Home = ({match, ...props}) => {
 
-    const categoryId = Math.random();
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(fetchCategories());
         dispatch(fetchBaseFilters());
     }, []);
-
-    useEffect(() => {
-        dispatch(fetchCategoryFilters(0));
-    }, [categoryId]);
 
     return (
         <div className="Home">
@@ -36,7 +31,9 @@ const Home = ({match, ...props}) => {
                             <div className="col-lg-9">
                                 <Switch>
                                     <Route path="/" exact component={HomeIndex} />
-                                    <Route path="/category/:categoryId/:categoryDetailId" exact component={CategoryMain}/>
+                                    <Route path="/category/:categoryId/:categoryDetailId"
+                                           exact component={CategoryMain}/>
+                                           exact component={CategoryMain}/>
                                     <Route path="/*" component={PageNotFound}/>
                                 </Switch>
                             </div>

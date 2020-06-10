@@ -1,4 +1,4 @@
-import {FETCH_POSTS_REQUEST, FETCH_POSTS_SUCCESS, FETCH_POSTS_ERROR} from '../actions/postFilterAction'
+import {FETCH_POSTS_REQUEST, FETCH_POSTS_SUCCESS, FETCH_POSTS_ERROR} from '../actions/postAction'
 
 const initial = {
     loading: false,

@@ -24,9 +24,10 @@ export const fetchPostsError = error => {
     }
 };
 
-export const fetchPosts = (categoryDetailId) => dispatch => {
+export const fetchPosts = (categoryDetailId, page) => dispatch => {
+    const url = `http://localhost:8081/rest/posts/categoryDetail/${categoryDetailId}?page=${page}`;
     dispatch(fetchPostsRequest());
-    axios.get("http://localhost:8081/rest/postDetails/categoryDetailId/" + categoryDetailId)
+    axios.get(url)
         .then(response => {
             dispatch(fetchPostsSuccess(response.data));
         }).catch(error => {

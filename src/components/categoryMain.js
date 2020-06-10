@@ -1,31 +1,46 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchCategoryFilters} from "../actions/categoryFilterAction";
-import {fetchPosts} from "../actions/postFilterAction";
+import {fetchPosts} from "../actions/postAction";
 import CategoryMainLayout from "./categoryMainLayout";
 import LoadingSpinner from "../loading.svg";
+import CategoryMainPagination from "./categoryMainPagination";
+import queryString from 'query-string';
 
-const CategoryMain = ({match}) => {
+const CategoryMain = ({match, location}) => {
 
     const categoryId = match && match.params.categoryId;
     const categoryDetailId = match && match.params.categoryDetailId;
+    const params = queryString.parse(location.search);
+
     const dispatch = useDispatch();
-    const posts = useSelector(state => state.post.posts);
+    const posts = useSelector(state => state.post.posts.content);
+    const pagedPosts = useSelector(state => state.post.posts);
     const categories = useSelector(state => state.category.categories);
     const loading = useSelector(state => state.post.loading);
 
     const determineCategory = () => {
-        return categories.find(category => category.id == categoryId);
+        const category = categories.find(category => category.id == categoryId);
+        const categoryDetail = category.categoryDetails.find(categoryDetail => categoryDetail.id == categoryDetailId);
+        return {category, categoryDetail};
+    };
+
+    const determinePage = (pageNumber) => {
+        if (pageNumber !== undefined && !isNaN(pageNumber)) return parseInt(pageNumber);
+        return 0;
     };
 
     useEffect(() => {
         if (categoryDetailId !== undefined) {
             dispatch(fetchCategoryFilters(categoryDetailId));
-            dispatch(fetchPosts(categoryDetailId));
-        } else {
-            dispatch(fetchCategoryFilters(0));
         }
     }, [categoryDetailId]);
+
+    useEffect(() => {
+        if (categoryDetailId !== undefined) {
+            dispatch(fetchPosts(categoryDetailId, determinePage(params.page)));
+        }
+    }, [categoryDetailId, params.page]);
 
     const stylesVar = {
         width: 250,
@@ -40,7 +55,7 @@ const CategoryMain = ({match}) => {
         backgroundColor: '#D3E1D6'
     };
 
-    const postsRender = posts.length > 0
+    const postsRender = posts && posts.length > 0
         ? posts.map(post => <CategoryMainLayout key={post.id} post={post} stylesVar={stylesVar}/>)
         : (
             <div className="jumbotron jumbotron-fluid">
@@ -61,10 +76,12 @@ const CategoryMain = ({match}) => {
     return (
         <div className="CategoryMain">
             <div className="box" style={topBox}>
-                <h2>{determineCategory() && determineCategory().name}</h2>
-                <p>{determineCategory() && determineCategory().description}</p>
+                <h2>{determineCategory() && determineCategory().category && determineCategory().category.name}</h2>
+                <p className="lead"><strong>{determineCategory() && determineCategory().categoryDetail &&
+                determineCategory().categoryDetail.name}</strong></p>
             </div>
             {postsRenderEncapsulator}
+            <CategoryMainPagination currentPage={determinePage(params.page)} totalPages={pagedPosts.totalPages} url={match.url}/>
         </div>
     );
 };

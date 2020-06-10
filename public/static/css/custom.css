@@ -2,3 +2,17 @@
 .category-card-div {
     max-height: 170px;
 }
+
+#react-paginate ul {
+    display: inline-block;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#react-paginate li {
+    display: inline-block;
+}
+
+.pagination .page-item {
+    cursor: pointer;
+}
