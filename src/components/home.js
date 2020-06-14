@@ -5,7 +5,6 @@ import {useDispatch} from "react-redux";
 import {fetchBaseFilters} from "../actions/baseFilterAction";
 import CategoryMain from "./categoryMain";
 import {Route, Switch} from "react-router-dom";
-import {fetchCategoryFilters} from "../actions/categoryFilterAction";
 import PageNotFound from "./pageNotFound";
 import HomeIndex from "./homeIndex";
 
@@ -30,9 +29,8 @@ const Home = ({match, ...props}) => {
                             </div>
                             <div className="col-lg-9">
                                 <Switch>
-                                    <Route path="/" exact component={HomeIndex} />
+                                    <Route path="/" exact component={HomeIndex}/>
                                     <Route path="/category/:categoryId/:categoryDetailId"
-                                           exact component={CategoryMain}/>
                                            exact component={CategoryMain}/>
                                     <Route path="/*" component={PageNotFound}/>
                                 </Switch>

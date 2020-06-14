@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchCategoryFilters} from "../actions/categoryFilterAction";
-import {fetchPosts} from "../actions/postAction";
+import {fetchPostsByCateogry} from "../actions/postAction";
 import CategoryMainLayout from "./categoryMainLayout";
 import LoadingSpinner from "../loading.svg";
 import CategoryMainPagination from "./categoryMainPagination";
@@ -26,6 +26,7 @@ const CategoryMain = ({match, location}) => {
     };
 
     const determinePage = (pageNumber) => {
+        console.log("Page number printed in categoryMain: " + pageNumber);
         if (pageNumber !== undefined && !isNaN(pageNumber)) return parseInt(pageNumber);
         return 0;
     };
@@ -38,9 +39,9 @@ const CategoryMain = ({match, location}) => {
 
     useEffect(() => {
         if (categoryDetailId !== undefined) {
-            dispatch(fetchPosts(categoryDetailId, determinePage(params.page)));
+            dispatch(fetchPostsByCateogry(categoryDetailId, determinePage(params.page)));
         }
-    }, [categoryDetailId, params.page]);
+    }, [params.page]);
 
     const stylesVar = {
         width: 250,
@@ -68,7 +69,7 @@ const CategoryMain = ({match, location}) => {
     const postsRenderEncapsulator = loading ?
         <div className="jumbotron jumbotron-fluid">
             <div className="container text-center">
-                <img alt="Posts Rendring...." src={LoadingSpinner}/>
+                <img alt="Posts Rendering...." src={LoadingSpinner}/>
             </div>
         </div>
         : postsRender;
@@ -81,7 +82,8 @@ const CategoryMain = ({match, location}) => {
                 determineCategory().categoryDetail.name}</strong></p>
             </div>
             {postsRenderEncapsulator}
-            <CategoryMainPagination currentPage={determinePage(params.page)} totalPages={pagedPosts.totalPages} url={match.url}/>
+            <CategoryMainPagination currentPage={determinePage(params.page)} totalPages={pagedPosts.totalPages}
+                                    url={match.url}/>
         </div>
     );
 };

@@ -6,6 +6,7 @@ import {useSelector} from "react-redux";
 import MainNavbar from "./components/mainNavbar";
 import Footer from "./components/footer";
 import Copyright from "./components/copyright";
+import Post from "./components/post";
 
 const switchRender = user => {
     return user ? (
@@ -14,6 +15,7 @@ const switchRender = user => {
                 <MainNavbar/>
                 <Switch>
                     <Redirect to="/" from="/login"/>
+                    <Route path="/post/:id" exact component={Post}/>
                     <Route path="/" component={Home}/>
                 </Switch>
                 <Footer/>
