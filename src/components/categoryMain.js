@@ -41,7 +41,7 @@ const CategoryMain = ({match, location}) => {
         if (categoryDetailId !== undefined) {
             dispatch(fetchPostsByCateogry(categoryDetailId, determinePage(params.page)));
         }
-    }, [params.page]);
+    }, [params.page, categoryDetailId]);
 
     const stylesVar = {
         width: 250,

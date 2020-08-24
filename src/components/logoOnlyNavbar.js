@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Ekinmel from '../img/ekinmel.png';
+import Ekinmel from '../images/ekinmel.png';
 
 class LogoOnlyNavbar extends Component {
     render() {

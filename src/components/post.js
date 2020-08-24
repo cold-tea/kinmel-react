@@ -1,13 +1,8 @@
 import React, {useEffect} from "react";
-import DetailBigOne from "../img/detailbig1.jpg";
-import DetailBigTwo from "../img/detailbig2.jpg";
-import DetailBigThree from "../img/detailbig3.jpg";
-import DetailSquareOne from "../img/detailsquare.jpg";
-import DetailSquareTwo from "../img/detailsquare2.jpg";
-import DetailSquareThree from "../img/detailsquare3.jpg";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchSinglePost} from "../actions/postAction";
 import LoadingSpinner from "../loading.svg";
+import NoImage from "../images/not-found.png";
 
 const Post = ({match}) => {
 
@@ -16,24 +11,220 @@ const Post = ({match}) => {
     const post = useSelector(state => state.post.posts);
     const loading = useSelector(state => state.post.loading);
 
-    const loadScript = url => {
-        const script = document.createElement('script');
-
-        script.src = url;
-        script.async = false;
-
-        document.body.appendChild(script);
+    const styleCarouselDetail = {
+        maxHeight: 420,
+        minHeight: 420,
+        height: 420,
+        width: 540,
+        minWidth: 540,
+        maxWidth: 540
     };
 
-    const styleVisibile = {
-        visibility: "visible",
-        display: "block"
+    const styleCarouselThumb = {
+        width: 80,
+        minWidth: 80,
+        maxWidth: 80,
+        maxHeight: 60,
+        minHeight: 60,
+        height: 60
     };
 
-    const styleInvisible = {
-        visibility: "hidden",
-        display: "none"
+    const carouselDetail = post.postImages && post.postImages.length > 0 ? (
+        post.postImages.map((postImage, index) =>
+            <div key={postImage.id} className={index === 0 ? "carousel-item active" : "carousel-item"}
+                 data-slide-number={index}>
+                <img style={styleCarouselDetail} src={postImage.image_url} className="img-fluid"/>
+            </div>)
+    ) : <div className="item">
+        <img style={styleCarouselDetail} src={NoImage} alt="No image uploaded" className="img-fluid"/>
+    </div>;
+
+
+    const carouselThumb = post.postImages && post.postImages.length > 0 ? (
+        post.postImages.map((postImage, index) =>
+            <li className={index === 0 ? "list-inline-item active" : "list-inline-item"}>
+                <a id={"carousel-selector-" + index} className="selected" data-slide-to={index}
+                   data-target="#myCarousel">
+                    <img style={styleCarouselThumb} src={postImage.image_url} className="img-fluid"/>
+                </a>
+            </li>)
+    ) : <div className="my-3 alert alert-info" role="alert">
+        No image uploaded!
+    </div>;
+
+    const determineIsNegotiable = (value) => {
+        if (value === "Y") return "Yes";
+        return "No";
     };
+
+    const determineDelivery = (value) => {
+        if (value === "Y") return "Yes";
+        return "No";
+    };
+
+    const beautifyDate = (date) => {
+        return date.substr(0, date.indexOf("T"));
+    };
+
+
+    const postRender = loading ?
+        <div className="container">
+            <div className="row" id="productMain">
+                <div className="col-lg-12 order-1 order-lg-2">
+                    <div className="container text-center">
+                        <img alt="Posts Rendering...." src={LoadingSpinner}/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        : (
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-6 align-items-center">
+                        <div id="slider">
+                            <div id="myCarousel" className="carousel slide shadow">
+                                <div className="carousel-inner">
+                                    {carouselDetail}
+                                    <a className="carousel-control-prev" href="#myCarousel" role="button"
+                                       data-slide="prev">
+                                                    <span className="carousel-control-prev-icon"
+                                                          aria-hidden="true"/>
+                                        <span className="sr-only">Previous</span>
+                                    </a>
+                                    <a className="carousel-control-next" href="#myCarousel" role="button"
+                                       data-slide="next">
+                                                    <span className="carousel-control-next-icon"
+                                                          aria-hidden="true"/>
+                                        <span className="sr-only">Next</span>
+                                    </a>
+                                </div>
+
+                                <ul className="carousel-indicators list-inline mx-auto border px-2">
+                                    {carouselThumb}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="col-md-6">
+                        <div className="box shadow">
+                            <h4 className="text-center">{post.title}</h4>
+                            <p className="goToDescription text-center"><a href="#details" className="scroll-to">Scroll
+                                to details</a></p>
+                            <p className="price text-center lead">Rs. {post.pricing && post.pricing.price}</p>
+                            <p className="text-center buttons"><a href="#" className="btn btn-outline-primary"><i
+                                className="fa fa-search-plus"/>Magnify Image</a></p>
+                        </div>
+                        <div className="box shadow">
+                            <h4 className="lead">Seller details</h4>
+                            <hr/>
+                            <table className="post-details">
+                                <tbody>
+                                <tr>
+                                    <td>Name:</td>
+                                    <td className="text-muted">{post.user && `${post.user.firstName} ${post.user.lastName}`}</td>
+                                </tr>
+                                <tr>
+                                    <td>Address:</td>
+                                    <td className="text-muted">{post.user && post.user.address}</td>
+                                </tr>
+                                <tr>
+                                    <td>Mobile:</td>
+                                    <td className="text-muted">{post.user && post.user.mobile}</td>
+                                </tr>
+                                <tr>
+                                    <td>Phone:</td>
+                                    <td className="text-muted">{post.user && (post.user.phone?post.user.phone:"Not Available")}</td>
+                                </tr>
+                                <tr>
+                                    <td>Email:</td>
+                                    <td className="text-muted">{post.user && (post.user.email?post.user.email:"Not Available")}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div className="col-md-12">
+                        <div id="details" className="box">
+                            <h4 className="lead">Post details</h4>
+                            <hr/>
+                            <table className="post-details">
+                                <tbody>
+                                <tr>
+                                    <td>Id:</td>
+                                    <td className="text-muted">Rs. {post.post && post.post.id}</td>
+                                </tr>
+                                <tr>
+                                    <td>Posted On:</td>
+                                    <td className="text-muted">{post.post && beautifyDate(post.post.postDate)}</td>
+                                </tr>
+                                <tr>
+                                    <td>Expires On:</td>
+                                    <td className="text-muted">{post.post && beautifyDate(post.post.expiryDate)}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div className="col-md-12">
+                        <div id="details" className="box">
+                            <h4 className="lead">Pricing details</h4>
+                            <hr/>
+                            <table className="post-details">
+                                <tbody>
+                                <tr>
+                                    <td>Price:</td>
+                                    <td className="text-muted">Rs. {post.pricing && post.pricing.price}</td>
+                                </tr>
+                                <tr>
+                                    <td>Condition:</td>
+                                    <td className="text-muted">{post.pricing && post.pricing.condition}</td>
+                                </tr>
+                                <tr>
+                                    <td>Is Negotiable?</td>
+                                    <td className="text-muted">{post.pricing && determineIsNegotiable(post.pricing.negotiable)}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div className="col-md-12">
+                        <div id="details" className="box">
+                            <h4 className="lead">Delivery details</h4>
+                            <hr/>
+                            <table className="post-details">
+                                <tbody>
+                                <tr>
+                                    <td>Delivery:</td>
+                                    <td className="text-muted">{post.delivery && determineDelivery(post.delivery.delivery)}</td>
+                                </tr>
+                                <tr>
+                                    <td>Delivery Area:</td>
+                                    <td className="text-muted">{post.delivery && post.delivery.deliveryArea}</td>
+                                </tr>
+                                <tr>
+                                    <td>Delivery Price:</td>
+                                    <td className="text-muted">{post.delivery && post.delivery.deliveryPrice}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div className="col-md-12">
+                        <div id="details" className="box">
+                            <h4 className="lead">Description</h4>
+                            <hr/>
+                            {post.description ? post.description : "No description to render"}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        );
 
     useEffect(() => {
         dispatch(fetchSinglePost(postId));
@@ -43,86 +234,7 @@ const Post = ({match}) => {
     return (
         <div id="all">
             <div id="content">
-                <div className="container" style={loading ? styleVisibile : styleInvisible}>
-                    <div className="row" id="productMain">
-                        <div className="col-lg-12 order-1 order-lg-2">
-                            <div className="container text-center">
-                                <img alt="Posts Rendering...." src={LoadingSpinner}/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="container" style={!loading ? styleVisibile : styleInvisible}>
-                    <div id="productMain" className="row">
-                        <div className="col-md-6">
-                            <div data-slider-id="1" className="owl-carousel shop-detail-carousel">
-                                <div className="item"><img src={DetailBigOne} alt="" className="img-fluid"/>
-                                </div>
-                                <div className="item"><img src={DetailBigTwo} alt="" className="img-fluid"/>
-                                </div>
-                                <div className="item"><img src={DetailBigThree} alt="" className="img-fluid"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-6">
-                            <div className="box">
-                                <h1 className="text-center">{post.title}</h1>
-                                <p className="goToDescription"><a href="#details" className="scroll-to">Scroll
-                                    to product
-                                    details, material &amp; care and sizing</a></p>
-                                <p className="price">$124.00</p>
-                                <p className="text-center buttons"><a href="#"
-                                                                      className="btn btn-primary"><i
-                                    className="fa fa-shopping-cart"/> Add to cart</a><a href="#"
-                                                                                        className="btn btn-outline-primary"><i
-                                    className="fa fa-heart"/> Add to wishlist</a></p>
-                            </div>
-                            <div data-slider-id="1" className="owl-thumbs">
-                                <button className="owl-thumb-item"><img src={DetailSquareOne} alt=""
-                                                                        className="img-fluid"/>
-                                </button>
-                                <button className="owl-thumb-item"><img src={DetailSquareTwo} alt=""
-                                                                        className="img-fluid"/></button>
-                                <button className="owl-thumb-item"><img src={DetailSquareThree} alt=""
-                                                                        className="img-fluid"/></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="details" className="box">
-                        <p></p>
-                        <h4>Product details</h4>
-                        <p>White lace top, woven, has a round neck, short sleeves, has knitted lining
-                            attached</p>
-                        <h4>Material &amp; care</h4>
-                        <ul>
-                            <li>Polyester</li>
-                            <li>Machine wash</li>
-                        </ul>
-                        <h4>Size &amp; Fit</h4>
-                        <ul>
-                            <li>Regular fit</li>
-                            <li>The model (height 5'8" and chest 33") is wearing a size S</li>
-                        </ul>
-                        <blockquote>
-                            <p><em>Define style this season with Armani's new range of trendy tops, crafted with
-                                intricate
-                                details. Create a chic statement look by teaming this lace number with skinny
-                                jeans and
-                                pumps.</em></p>
-                        </blockquote>
-                        <hr/>
-                        <div className="social">
-                            <h4>Show it to your friends</h4>
-                            <p><a href="#" className="external facebook"><i
-                                className="fa fa-facebook"/></a><a href="#"
-                                                                   className="external gplus"><i
-                                className="fa fa-google-plus"/></a><a href="#"
-                                                                      className="external twitter"><i
-                                className="fa fa-twitter"/></a><a href="#" className="email"><i
-                                className="fa fa-envelope"/></a></p>
-                        </div>
-                    </div>
-                </div>
+                {postRender}
             </div>
         </div>
     );

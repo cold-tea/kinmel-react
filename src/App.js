@@ -43,22 +43,3 @@ const App = () => {
 
 export default App;
 
-/*
-const mapStateToProps = state => {
-    if (state.userReducer.isLoading === false) {
-        return {
-            users: state.userReducer.users,
-            isLoading: state.userReducer.isLoading
-        }
-    }
-    return null;
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        fetchUsers: () => dispatch(fetchUsers())
-    }
-};
-export default connect(mapStateToProps, mapDispatchToProps)(App);
- */
-

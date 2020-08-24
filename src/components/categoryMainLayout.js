@@ -1,9 +1,15 @@
 import React from "react";
-import ProductOne from "../img/product1.jpg";
+import NoImage from "../images/not-found.png";
+import {Link} from "react-router-dom";
 
 const CategoryMainLayout = ({stylesVar, post}) => {
 
     const fullName = `${post.user.firstName} ${post.user.lastName}`;
+    const thumbnailImage = post.postImages.length > 0 ?
+        post.postImages.find(postImage => postImage.thumbnail === 'Y')
+        : null;
+    const thumbnailImageUrl = thumbnailImage !== null ? thumbnailImage.image_url : NoImage;
+
     return (
         <div className="row products">
             <div className="col-lg-12">
@@ -18,10 +24,10 @@ const CategoryMainLayout = ({stylesVar, post}) => {
                         <h6 className="text-danger">Price: Rs. {post.pricing.price}
                             <span className="badge badge-danger ml-1">{post.pricing.condition}</span>
                         </h6>
-                        <a className="btn btn-outline-success btn-sm" href={`/post/${post.id}`}>View Details</a>
+                        <Link className="btn btn-outline-success btn-sm" to={`/post/${post.id}`}>View Details</Link>
                     </div>
                     <img className="card-img-right flex-auto d-none d-lg-block m-2" alt="Thumbnail [200x250]"
-                         src={ProductOne} style={stylesVar}/>
+                         src={thumbnailImageUrl} style={stylesVar}/>
                 </div>
             </div>
         </div>

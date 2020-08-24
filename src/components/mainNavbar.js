@@ -1,5 +1,5 @@
-import React, {useEffect} from "react";
-import EKinmel from '../img/ekinmel.png';
+import React from "react";
+import EKinmel from '../images/ekinmel.png';
 import {useDispatch, useSelector} from "react-redux";
 import {logoutUser} from "../actions/userAction";
 import {Link} from "react-router-dom";
@@ -9,10 +9,10 @@ const MainNavbar = () => {
 
     const dispatch = useDispatch();
     const {firstName, lastName} = useSelector(state => {
-       return {
+        return {
             firstName: [state.user.user.firstName],
             lastName: [state.user.user.lastName]
-       };
+        };
     });
 
     const handleLogout = () => {
@@ -47,10 +47,10 @@ const MainNavbar = () => {
                                 <div id="profile" className="navbar-collapse collapse d-none d-lg-block">
                                     <a href="#">{`${firstName} ${lastName}`}</a>
                                 </div>
-                                <div id="search-modified" className="navbar-collapse collapse d-none d-lg-block">
+                                <div className="navbar-collapse collapse d-none d-lg-block">
                                     <div className="container">
-                                        <form role="search" className="ml-auto">
-                                            <div className="input-group">
+                                        <form role="search">
+                                            <div className="input-group mt-3">
                                                 <input type="text" placeholder="Search" className="form-control"/>
                                                 <div className="input-group-append">
                                                     <button type="button" className="btn btn-primary"><i
@@ -60,10 +60,12 @@ const MainNavbar = () => {
                                         </form>
                                     </div>
                                 </div>
-                                <div id="logout" className="navbar-collapse collapse d-none d-lg-block"><button
-                                    onClick={handleLogout}
-                                    className="btn btn-primary navbar-btn"><i
-                                    className="fa fa-sign-out"/><span>Logout</span></button></div>
+                                <div id="logout" className="navbar-collapse collapse d-none d-lg-block">
+                                    <button
+                                        onClick={handleLogout}
+                                        className="btn btn-primary navbar-btn"><i
+                                        className="fa fa-sign-out"/><span>Logout</span></button>
+                                </div>
                             </div>
                         </div>
                     </div>

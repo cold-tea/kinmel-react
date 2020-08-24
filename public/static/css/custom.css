@@ -16,3 +16,36 @@
 .pagination .page-item {
     cursor: pointer;
 }
+
+.post-details td {
+    padding-right: 15px;
+    padding-top: 7px;
+}
+
+
+
+
+    /* New custom layout for carousel */
+#myCarousel .list-inline {
+    white-space:nowrap;
+    overflow-x:auto;
+}
+
+#myCarousel .carousel-indicators {
+    position: static;
+    left: initial;
+    width: initial;
+    margin-left: initial;
+}
+
+#myCarousel .carousel-indicators > li {
+    width: initial;
+    height: initial;
+    text-indent: initial;
+}
+
+#myCarousel .carousel-indicators > li.active img {
+    opacity: 0.7;
+}
+
+

@@ -29,6 +29,7 @@ const Home = ({match, ...props}) => {
                             </div>
                             <div className="col-lg-9">
                                 <Switch>
+
                                     <Route path="/" exact component={HomeIndex}/>
                                     <Route path="/category/:categoryId/:categoryDetailId"
                                            exact component={CategoryMain}/>
